@@ -2,9 +2,10 @@
 
 function usage()
 {
-    echo "./imagetool.sh build -t oci/local liihb/os:1.0"
-    echo "./imagetool.sh push liihb/os:1.0"
-    echo "./imagetool.sh pull liihb/os:1.0"
+    echo "Example :"
+    echo "    ./imagetool.sh build -t oci/local liihb/os:1.0"
+    echo "    ./imagetool.sh push liihb/os:1.0"
+    echo "    ./imagetool.sh pull liihb/os:1.0"
 }
 
 function env_check()
@@ -27,6 +28,11 @@ function env_check()
         exit 1
     else
         cp Dockerfile_app Dockerfile
+        docker images | grep "qemu-user-static"
+        if [ "$?" != 0 ]; then
+            echo INFO: registed qemu-user-static
+            docker run --rm --privileged multiarch/qemu-user-static:register
+        fi
     fi
 }
 
