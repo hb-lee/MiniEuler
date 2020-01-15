@@ -1,0 +1,8 @@
+FROM liihb/baseos:1.0 as httpdbuilder
+MAINTAINER lhb
+COPY qemu-aarch64-static /usr/bin
+RUN yum --releasever 1.0 install -y httpd
+
+FROM httpdbuilder
+EXPOSE 80
+CMD /usr/bin/bash
